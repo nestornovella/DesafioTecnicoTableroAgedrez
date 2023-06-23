@@ -1,0 +1,84 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <section class="inputs">
+            <input class="casilleros" placeholder="cantidad de casilleros" type="text">
+            <input class="color1" placeholder="color1 hexadecimal" type="text">
+            <input class="color2" placeholder="color2 hexadecimal" type="text">
+
+        </section>
+        <div style="display:flex; justify-content:center">
+            <button id="create">Crear Tablero</button>
+        </div>
+
+        <section id="tablero">
+
+        </section>
+
+
+
+    </main>
+</body>
+
+<script>
+    // accedo a elementos del DOM para poder manipular estilos y propiedades
+    const tablero = document.getElementById('tablero')
+    const inputsContainer = document.querySelector('.inputs')
+    const inputs = document.querySelectorAll('input')
+    const createButton = document.getElementById("create")
+
+    inputsContainer.style.cssText = `display: flex; justify-content:center; margin-top:30px`
+    inputs.forEach(e => (
+        e.style.cssText = `margin: 50px`
+    ))
+
+
+    // funcion que crea tablero alternando color hexaDecimal recibe 3 params , cantyidad de casilleros, color1 y color2
+    function crearTablero(numeroDeFilasXCeldas, colorExa1, colorExa2) {
+        let fila = true;
+        for (let i = 0; i < numeroDeFilasXCeldas * numeroDeFilasXCeldas; i++) {
+            const element = document.createElement('div');
+            tablero.appendChild(element);
+
+            fila = !fila;
+            if (i % numeroDeFilasXCeldas === 0) fila = !fila
+            if (fila === true) {
+                element.style.backgroundColor = `rgb(${colorExa1})`;
+            } else {
+                element.style.backgroundColor = `rgb(${colorExa2})`;
+            }
+        }
+        tablero.style.cssText = `;display: grid; grid-template-columns: repeat(${numeroDeFilasXCeldas}, 50px); gap: 0; justify-content:center; margin-top:20vh`;
+        Array.from(tablero.children).forEach(e => {
+            e.style.width = '50px';
+            e.style.height = '50px';
+            e.style.border = '1px solid black';
+        });
+    }
+
+    //agrego evento a boton para que ejecute funcion cradora de tablero
+    create.addEventListener('click', event => {
+        tablero.textContent = ""
+        const casilleros = parseInt(document.querySelector('.casilleros').value)
+        const color1 = document.querySelector('.color1').value
+        const color2 = document.querySelector('.color2').value
+        crearTablero(casilleros, color1, color2)
+
+    })
+
+    // funcion muy sencilla desarrollada en 30 minutos que cumple con lo elemental, no se pretende destacar 
+    //en estilado solo cumple con funcionalidad
+        ;
+</script>
+
+</html>
